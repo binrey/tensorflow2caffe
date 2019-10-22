@@ -9,9 +9,9 @@ num_calibration_steps = 100
 ((train_data, train_labels),
  (eval_data, eval_labels)) = tf.keras.datasets.mnist.load_data()
 
-train_data = train_data.astype(np.float32)/np.float32(255)
+train_data = train_data.astype(np.float32)
 train_data = np.stack([train_data] * 3, axis=-1)
-train_labels = train_labels.astype(np.int32)  # not required
+train_labels = train_labels.astype(np.int32)
 
 converter = tf.lite.TFLiteConverter.from_session(
     sess=load_for_infer(batch_size=batch_size),
@@ -22,8 +22,6 @@ def representative_dataset_gen():
     for i in range(0, num_calibration_steps*batch_size, batch_size):
         yield [train_data[i:i+batch_size]]
 
-#converter.target_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]
-#converter.allow_custom_ops = True
 converter.optimizations = [tf.lite.Optimize.DEFAULT]
 converter.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
 converter.representative_dataset = representative_dataset_gen

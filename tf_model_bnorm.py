@@ -7,7 +7,7 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 
 def inner_structure(input_layer, is_training):
-    x = tf.layers.batch_normalization(input_layer, training=is_training, name="bnorm0")
+    x = tf.layers.batch_normalization(input_layer, training=is_training, name="bnorm0", epsilon=1e-5)
     # Convolutional Layer 1
     x = tf.layers.conv2d(
         name="conv1",
@@ -17,7 +17,7 @@ def inner_structure(input_layer, is_training):
         padding="same",
         use_bias=False)
     # Batch normalization layer 1
-    x = tf.layers.batch_normalization(x, training=is_training, name="bnorm1")
+    x = tf.layers.batch_normalization(x, training=is_training, name="bnorm1", epsilon=1e-5)
     # ReLu activation 1
     x = tf.nn.relu(x, "relu1")
     # Pooling Layer #1
@@ -32,7 +32,7 @@ def inner_structure(input_layer, is_training):
         use_bias=False,
         name="conv2")
     # Batch normalization layer 2
-    x = tf.layers.batch_normalization(x, training=is_training, name="bnorm2")
+    x = tf.layers.batch_normalization(x, training=is_training, name="bnorm2", epsilon=1e-5)
     # ReLu activation 2
     x = tf.nn.relu(x, name='relu2')
     # Pooling Layer 2

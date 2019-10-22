@@ -1,5 +1,5 @@
 # Convert weights from Tensorflow format to Caffe and save them
-
+import tensorflow as tf
 from utils import *
 import numpy as np
 from tf_model_bnorm import load_for_infer
