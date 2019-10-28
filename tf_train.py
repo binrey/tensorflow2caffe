@@ -1,4 +1,4 @@
-from main_bnorm import *
+from tf_model_bnorm import *
 
 # Load training and eval data
 ((train_data, train_labels),

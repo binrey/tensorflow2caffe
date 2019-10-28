@@ -75,7 +75,8 @@ def cnn_model_fn(features, labels, mode):
         update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
         with tf.control_dependencies(update_ops):
-            train_op = optimizer.minimize(loss, global_step=tf.train.get_global_step())
+            gradients = optimizer.compute_gradients(loss)
+            train_op = optimizer.apply_gradients(gradients, global_step=tf.train.get_global_step())
         return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
 
     # Add evaluation metrics (for EVAL mode)
@@ -83,10 +84,13 @@ def cnn_model_fn(features, labels, mode):
         "accuracy": tf.metrics.accuracy(
             labels=labels, predictions=predictions["classes"])
     }
+
+    train_writer = tf.summary.FileWriter(os.path.join("./logs"), graph=tf.get_default_graph())
     return tf.estimator.EstimatorSpec(
         mode=mode,
         loss=loss,
         eval_metric_ops=eval_metric_ops)
+
 
 def load_for_infer(batch_size=None, writelogs=False, load_weights=True):
     sess = tf.Session()
@@ -108,7 +112,19 @@ def load_for_infer(batch_size=None, writelogs=False, load_weights=True):
         infer_writer = tf.summary.FileWriter(os.path.join(log_dir), graph=sess.graph)
     return sess
 
+def load_ckpt(rootpath):
+    sess = tf.Session()
+    ckpt_last = tf.train.latest_checkpoint(rootpath)
+    tf.train.import_meta_graph(ckpt_last+".meta")
+    sess = tf.Session(graph=sess.graph)
+    saver = tf.train.Saver()
+    saver.restore(sess, ckpt_last)
+    return sess
+
+
 if __name__ == "__main__":
-    sess = load_for_infer(None, True, False)
-    op_names = [n.name for n in tf.get_default_graph().as_graph_def().node]
-    print("\n".join(op_names))
+    #sess = load_for_infer(None, True, False)
+
+    sess = load_ckpt("./tmp")
+    grad_ops = [n for n in tf.get_default_graph().as_graph_def().node if n.name.startswith("grad")]
+    sess.run(fetches=["gradients/conv1/Conv2D_grad/Conv2DBackpropFilter:0"])

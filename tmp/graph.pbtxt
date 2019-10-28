@@ -1876,7 +1876,7 @@ node {
   attr {
     key: "epsilon"
     value {
-      f: 0.0010000000474974513
+      f: 1.0009999641624745e-05
     }
   }
   attr {
@@ -3636,7 +3636,7 @@ node {
   attr {
     key: "epsilon"
     value {
-      f: 0.0010000000474974513
+      f: 1.0009999641624745e-05
     }
   }
   attr {
@@ -5494,7 +5494,7 @@ node {
   attr {
     key: "epsilon"
     value {
-      f: 0.0010000000474974513
+      f: 1.0009999641624745e-05
     }
   }
   attr {
@@ -10719,7 +10719,7 @@ node {
   attr {
     key: "epsilon"
     value {
-      f: 0.0010000000474974513
+      f: 1.0009999641624745e-05
     }
   }
   attr {
@@ -11489,7 +11489,7 @@ node {
   attr {
     key: "epsilon"
     value {
-      f: 0.0010000000474974513
+      f: 1.0009999641624745e-05
     }
   }
   attr {
@@ -12158,7 +12158,7 @@ node {
   attr {
     key: "epsilon"
     value {
-      f: 0.0010000000474974513
+      f: 1.0009999641624745e-05
     }
   }
   attr {
@@ -16811,7 +16811,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_6a4172db9c614452b9ff01d8ccbf79af/part"
+        string_val: "_temp_aab650a49cf94de799977cb3f1e43e10/part"
       }
     }
   }
