@@ -29,16 +29,47 @@ def sparse_variables(sparsity):
         value = sess.run(pruned_var)
         print("{}: {} -> sparsity {}%".format(fname, value.shape, (value == 0).sum()/value.flatten().shape[0]*100))
 
-acc = []
-sess = load_for_infer()
-spars_vals = np.arange(0, 0.1, 0.1)
-for sp in spars_vals:
-    sparse_variables(sp)
-    acc.append(calc_test(sess))
 
-plt.plot(spars_vals, acc)
-plt.grid("on")
-plt.show()
+def sparse_np_variables(session, sparsity, vars=None):
+    if not vars:
+        vars = tf.global_variables()
+    layers2save = ["dense", "conv"]
+    masks = []
+    for i, var in enumerate(vars):
+        fname = "-".join(var.name.replace(":0", "").split("/")[:2])
+        if not (fname.startswith(tuple(layers2save))) or "kernel" not in fname:
+            masks.append(np.ones(var.shape))
+            continue
+        np_var = session.run(var)#np.random.randint(0, 10, 10)#
+        fvar = np_var.flatten()
+        sorted_ind = np.argsort(-np.abs(fvar))
+        re_ind = np.argsort(sorted_ind)
+        sorted_var = fvar[sorted_ind]
+        tot_len = fvar.size
+        keep_len = int(np.rint((1-sparsity)*tot_len))
+        ones_part = np.ones(keep_len)
+        zeros_part = np.zeros(tot_len - keep_len)
+        mask = np.hstack([ones_part, zeros_part])
+        mask = mask[re_ind].reshape(np_var.shape)
+        masked_var = np_var*mask
+        session.run(tf.assign(var, masked_var))
+        masks.append(mask)
+        test_sp = (masked_var == 0).sum()/masked_var.size*100
+        print("{:15}: {:15} -> sparsity {:6.2f}%".format(fname, str(masked_var.shape), test_sp))
+    return masks
+
+
+if __name__ == "__main__":
+    acc = []
+    sess = load_for_infer()
+    spars_vals = np.arange(0, 0.1, 0.1)
+    for sp in spars_vals:
+        m = sparse_np_variables(sess, sp)
+        acc.append(calc_test(sess))
+
+    plt.plot(spars_vals, acc)
+    plt.grid("on")
+    plt.show()
 
 
 
