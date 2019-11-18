@@ -1,0 +1,480 @@
+# ---------------------------------
+# Input
+# ---------------------------------
+name: "signcls"
+input: "input"
+input_shape {
+  dim: 1
+  dim: 3
+  dim: 48
+  dim: 48
+}
+# -------------------
+layer {
+  name: "moving00"
+  type: "BatchNorm"
+  bottom: "input"
+  top: "moving00"
+}
+layer {
+    name: "bn00"
+    bottom: "moving00"
+    top: "moving00"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# ---------------------------------
+# Block 11
+# ---------------------------------
+layer {
+  name: "conv01"
+  type: "Convolution"
+  bottom: "moving00"
+  top: "conv01"
+  convolution_param {
+    num_output: 16
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+# -------------------
+layer {
+  name: "moving01"
+  type: "BatchNorm"
+  bottom: "conv01"
+  top: "conv01"
+}
+layer {
+    name: "bn01"
+    bottom: "conv01"
+    top: "conv01"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu01"
+  type: "ReLU"
+  bottom: "conv01"
+  top: "conv01"
+}
+# ---------------------------------
+# Block 12
+# ---------------------------------
+layer {
+  name: "conv02"
+  type: "Convolution"
+  bottom: "conv01"
+  top: "conv02"
+  convolution_param {
+    num_output: 16
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+# -------------------
+layer {
+  name: "moving02"
+  type: "BatchNorm"
+  bottom: "conv02"
+  top: "conv02"
+}
+layer {
+    name: "bn02"
+    bottom: "conv02"
+    top: "conv02"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu02"
+  type: "ReLU"
+  bottom: "conv02"
+  top: "conv02"
+}
+# ---------------------------------
+# Block 13
+# ---------------------------------
+layer {
+  name: "conv03"
+  type: "Convolution"
+  bottom: "conv02"
+  top: "conv03"
+  convolution_param {
+    num_output: 16
+    bias_term: true
+    pad: 0
+    kernel_size: 2
+    stride: 2
+  }
+}
+# -------------------
+layer {
+  name: "moving03"
+  type: "BatchNorm"
+  bottom: "conv03"
+  top: "conv03"
+}
+layer {
+    name: "bn03"
+    bottom: "conv03"
+    top: "conv03"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu03"
+  type: "ReLU"
+  bottom: "conv03"
+  top: "conv03"
+}
+# ---------------------------------
+# Block 21
+# ---------------------------------
+layer {
+  name: "conv04"
+  type: "Convolution"
+  bottom: "conv03"
+  top: "conv04"
+  convolution_param {
+    num_output: 32
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+# -------------------
+layer {
+  name: "moving04"
+  type: "BatchNorm"
+  bottom: "conv04"
+  top: "conv04"
+}
+layer {
+    name: "bn04"
+    bottom: "conv04"
+    top: "conv04"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu04"
+  type: "ReLU"
+  bottom: "conv04"
+  top: "conv04"
+}
+# ---------------------------------
+# Block 22
+# ---------------------------------
+layer {
+  name: "conv05"
+  type: "Convolution"
+  bottom: "conv04"
+  top: "conv05"
+  convolution_param {
+    num_output: 32
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+# -------------------
+layer {
+  name: "moving05"
+  type: "BatchNorm"
+  bottom: "conv05"
+  top: "conv05"
+}
+layer {
+    name: "bn05"
+    bottom: "conv05"
+    top: "conv05"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu05"
+  type: "ReLU"
+  bottom: "conv05"
+  top: "conv05"
+}
+# ---------------------------------
+# Block 23
+# ---------------------------------
+layer {
+  name: "conv06"
+  type: "Convolution"
+  bottom: "conv05"
+  top: "conv06"
+  convolution_param {
+    num_output: 32
+    bias_term: true
+    pad: 0
+    kernel_size: 2
+    stride: 2
+  }
+}
+# -------------------
+layer {
+  name: "moving06"
+  type: "BatchNorm"
+  bottom: "conv06"
+  top: "conv06"
+}
+layer {
+    name: "bn06"
+    bottom: "conv06"
+    top: "conv06"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu06"
+  type: "ReLU"
+  bottom: "conv06"
+  top: "conv06"
+}
+# ---------------------------------
+# Block 31
+# ---------------------------------
+layer {
+  name: "conv07"
+  type: "Convolution"
+  bottom: "conv06"
+  top: "conv07"
+  convolution_param {
+    num_output: 64
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+# -------------------
+layer {
+  name: "moving07"
+  type: "BatchNorm"
+  bottom: "conv07"
+  top: "conv07"
+}
+layer {
+    name: "bn07"
+    bottom: "conv07"
+    top: "conv07"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu07"
+  type: "ReLU"
+  bottom: "conv07"
+  top: "conv07"
+}
+# ---------------------------------
+# Block 32
+# ---------------------------------
+layer {
+  name: "conv08"
+  type: "Convolution"
+  bottom: "conv07"
+  top: "conv08"
+  convolution_param {
+    num_output: 64
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+# -------------------
+layer {
+  name: "moving08"
+  type: "BatchNorm"
+  bottom: "conv08"
+  top: "conv08"
+}
+layer {
+    name: "bn08"
+    bottom: "conv08"
+    top: "conv08"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu08"
+  type: "ReLU"
+  bottom: "conv08"
+  top: "conv08"
+}
+# ---------------------------------
+# Block 33
+# ---------------------------------
+layer {
+  name: "conv09"
+  type: "Convolution"
+  bottom: "conv08"
+  top: "conv09"
+  convolution_param {
+    num_output: 64
+    bias_term: true
+    pad: 0
+    kernel_size: 2
+    stride: 2
+  }
+}
+# -------------------
+layer {
+  name: "moving09"
+  type: "BatchNorm"
+  bottom: "conv09"
+  top: "conv09"
+}
+layer {
+    name: "bn09"
+    bottom: "conv09"
+    top: "conv09"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu09"
+  type: "ReLU"
+  bottom: "conv09"
+  top: "conv09"
+}
+# ---------------------------------
+# Block 41
+# ---------------------------------
+layer {
+  name: "conv10"
+  type: "Convolution"
+  bottom: "conv09"
+  top: "conv10"
+  convolution_param {
+    num_output: 128
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+# -------------------
+layer {
+  name: "moving10"
+  type: "BatchNorm"
+  bottom: "conv10"
+  top: "conv10"
+}
+layer {
+    name: "bn10"
+    bottom: "conv10"
+    top: "conv10"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu10"
+  type: "ReLU"
+  bottom: "conv10"
+  top: "conv10"
+}
+# ---------------------------------
+# Block 42
+# ---------------------------------
+layer {
+  name: "conv11"
+  type: "Convolution"
+  bottom: "conv10"
+  top: "conv11"
+  convolution_param {
+    num_output: 128
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+# -------------------
+layer {
+  name: "moving11"
+  type: "BatchNorm"
+  bottom: "conv11"
+  top: "conv11"
+}
+layer {
+    name: "bn11"
+    bottom: "conv11"
+    top: "conv11"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+# -------------------
+layer {
+  name: "relu11"
+  type: "ReLU"
+  bottom: "conv11"
+  top: "conv11"
+}
+# ---------------------------------
+# Output
+# ---------------------------------
+layer {
+  name: "flatten"
+  type: "Flatten"
+  bottom: "conv11"
+  top: "flatten"
+}
+layer {
+  name: "dense01"
+  type: "InnerProduct"
+  bottom: "flatten"
+  top: "dense01"
+  inner_product_param {
+    num_output: 38
+  }
+}
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "dense01"
+  top: "prob"
+}

@@ -18,7 +18,7 @@ Graph structure of tensorflow model (tensorboard-visualization  from log folder)
 
 Run **estimator_predict.py** - check tf-model on ten test images. This results will be compared with caffe predictions.
 
-![](./imgs/res10-tf.png)
+![](imgs/mnist/res10-tf.png)
 
 ## Visualize layers outputs
 
@@ -52,9 +52,9 @@ dense2/BiasAdd
 probs
 ```
 
-![](./imgs/convs-tf.png)
+![](imgs/mnist/convs-tf.png)
 
-![](./imgs/denses-tf.png)
+![](imgs/mnist/denses-tf.png)
 
 4. Save weights and biases from tf-model to binary files. Weights has tensorflow format (width, height, channels, filters).
 

@@ -1,0 +1,10 @@
+bnorm0/gamma:0
+bnorm0/beta:0
+bnorm0/moving_mean:0
+bnorm0/moving_variance:0
+conv1/kernel:0
+conv2/kernel:0
+dense1/kernel:0
+dense1/bias:0
+dense2/kernel:0
+dense2/bias:0

@@ -69,7 +69,7 @@ def plog(epoch):
     logacc = sess.run(acc)
     print("{:>3} - {:6.3f} {:6.3f}".format(epoch, logloss, logacc))
 
-def sparse_test():
+def sparsity_test():
     spars = []
     for tf_var in tf.global_variables():
         if (tf_var.name.startswith(tuple(["conv", "dense"]))) and "kernel" in tf_var.name:
@@ -83,7 +83,7 @@ sess = tf.Session()
 sess.run(tf.local_variables_initializer())
 saver = tf.train.Saver()
 saver.restore(sess=sess, save_path=tf.train.latest_checkpoint("./tmp"))
-sparse_test()
+sparsity_test()
 
 # Load data
 # ----------------------------------------------------------------------------------------------------------------------
@@ -120,4 +120,4 @@ for i, sp in enumerate(sparse_shedule):
             sess.run(fetches=train_op, feed_dict=fdict)
         plog(epoch+1)
 
-    sparse_test()
+    sparsity_test()

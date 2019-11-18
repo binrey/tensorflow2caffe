@@ -1,4 +1,4 @@
-#import tensorflow as tf
+import tensorflow as tf
 import os
 import shutil
 import numpy as np
@@ -84,7 +84,7 @@ def vi_convs(op_names, resfun, out_name, conv_format="TF"):
         nop += 1
 
     fig.suptitle("convs outputs", fontsize=18)
-    plt.savefig(os.path.join("./imgs", out_name))
+    plt.savefig(os.path.join("./imgs/", out_name))
 
 
 def vi_denses(op_names, resfun, out_name):
@@ -102,3 +102,38 @@ def vi_denses(op_names, resfun, out_name):
         nop += 1
     fig.suptitle("denses outputs", fontsize=18)
     plt.savefig(os.path.join("./imgs", out_name))
+
+
+def rename_tf_layer(name, lcounts):
+    rename_dict = {"batch_norm": "bn",
+                   "FusedBatchNorm_mul_0_param": "gamma",
+                   "FusedBatchNorm_add_param": "beta"}
+
+    name = name.replace(":0", "")
+    targ_name = ""
+    for k, v in rename_dict.items():
+        if k in name:
+            name = name.replace(k, v)
+
+    if "bn" in name and "moving_mean" in name:
+        targ_name = "moving-mean"
+    if "bn" in name and "moving_variance" in name:
+        targ_name = "moving-var"
+    if "bn" in name and "beta" in name:
+        targ_name = "bn-beta"
+    if "bn" in name and "gamma" in name:
+        targ_name = "bn-gamma"
+    if "conv" in name and "kernel" in name:
+        targ_name = "conv-kernel"
+    if "conv" in name and "bias" in name:
+        targ_name = "conv-bias"
+    if "dense" in name and "kernel" in name:
+        targ_name = "dense-kernel"
+    if "dense" in name and "bias" in name:
+        targ_name = "dense-bias"
+    if len(targ_name):
+        name = targ_name.replace("-", "{:02d}-".format(lcounts[targ_name]))
+        lcounts[targ_name] += 1
+        return name
+    else:
+        return None

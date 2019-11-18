@@ -1,14 +1,10 @@
 import tensorflow as tf
 import numpy as np
-from tf_model_bnorm import load_for_infer
+from mnist_model import load_for_infer, load_data
 
 
 def calc_test(sess, test_size=1000):
-    _, (eval_data, eval_labels) = tf.keras.datasets.mnist.load_data()
-
-    eval_data = eval_data.astype(np.float32)
-    eval_data = np.stack([eval_data] * 3, axis=-1)
-    eval_labels = eval_labels.astype(np.int32)  # not required
+    _, _, eval_data, eval_labels = load_data(test_size)
 
     predicts = []
     for i in range(0, test_size, 100):
