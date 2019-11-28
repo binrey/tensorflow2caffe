@@ -1,4 +1,4 @@
-import tensorflow as tf
+#import tensorflow as tf
 import os
 import shutil
 import numpy as np
@@ -7,21 +7,16 @@ from matplotlib import pyplot as plt
 
 def transpose_weights(m, last_conv_shape, transp_seq):
     """
-    last_conv_shape - conv layer is written in format (w, h, c, b), where
-    w - width, h - height, c - channel, b - batch,
-    first_dense_shape = [-1, 1024] - dense layer is written in format (inp, nn), where
-    inp - input flatten size, nn - number of nodes in dense layer.
-    Notice, that inp =
-    transp_seq = [2, 0, 1, 3], transform dense layer like it was taken from format (c, w, h, b)
+    last_conv_shape - conv weights are written in format (w, h, c_conv, c_dense), where
+    w - width, h - height, c_conv - channel of last conv layer, b - channels of first dense layer,
+    For example first dense has shape [inp, out] - dense layer is written in format (inp, out), where
+    inp - input flatten size, out - number of nodes in dense layer. Thats means [228, 1024] -> [(3, 3, 32), 1024],
+    where conv weights are included. The pipeline of this function:
+    1. reshape m from [228, 1024] back to [3, 3, 32, 1024]
+    2. change dimensions in caffe order [32, 3, 3, 1024]
+    3. reshape back to initial shape [228, 1024]
     """
-    m_out = m.reshape(last_conv_shape).transpose(transp_seq).reshape(m.shape)
-
-    # Take element [0,1,2,3] for verification
-    #w1 = m.reshape(last_conv_shape)[0,1,2,3]
-    new_shape = [last_conv_shape[i] for i in transp_seq]
-    #w2 = m_out.reshape(new_shape)[2,0,1,3]
-    #assert (np.abs(w1) - np.abs(w2)).sum() == 0
-    return m_out
+    return m.reshape(last_conv_shape).transpose(transp_seq).reshape(m.shape)
 
 
 def freeze_graph(sess):

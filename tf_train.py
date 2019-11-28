@@ -1,4 +1,4 @@
-from mnist_model import *
+from mnistcls_model import *
 
 train_data, train_labels, eval_data, eval_labels = load_data(10000)
 

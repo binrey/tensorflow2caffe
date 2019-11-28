@@ -1,6 +1,7 @@
 # Convert weights from Tensorflow format to Caffe and save them
+from __future__ import print_function
 import tensorflow as tf
-from mnist_model import NETNAME, last_conv_shape, load_for_infer
+from mnistcls_model import NETNAME, last_conv_shape, load_for_infer
 import numpy as np
 import os
 from utils import *
@@ -21,13 +22,15 @@ layers_counts = {"moving-mean": 0,
 
 sess = load_for_infer()
 
-with open(os.path.join("{}_selected_layers.txt".format(NETNAME)), "r") as f:
+with open(os.path.join("selected_layers", "{}.txt".format(NETNAME)), "r") as f:
     layers2save = f.read().splitlines()
 
 vars = tf.all_variables()
-[print(var.name) for var in vars]
+for var in vars:
+    print(var.name)
 
 first_dense = None
+bn_collection = {}
 
 print("{1}\nParse and save variables to ./tf_weights/{0}\n{1}".format(NETNAME, "".join(60*["-"])))
 for var in vars:
@@ -40,7 +43,7 @@ for var in vars:
     if first_dense is None:
         if "dense" in var.name and "kernel" in var.name:
             first_dense = True
-            value = transpose_weights(value, last_conv_shape, [2, 0, 1, 3])
+            value = transpose_weights(value, last_conv_shape+[-1], [2, 0, 1, 3])
     if len(value.shape)==4:
         value = value.transpose([3, 2, 0, 1])
     elif len(value.shape)==2:
@@ -49,3 +52,20 @@ for var in vars:
 
     np.save(os.path.join(rootdir, "{}.npy".format(fname)), value)
 
+    if fname.startswith("bn"):
+        if "beta" in fname:
+            bn_collection.update({"beta": value})
+        if "gamma" in fname:
+            bn_collection.update({"gamma": value})
+    if fname.startswith("moving"):
+        if "mean" in fname:
+            bn_collection.update({"mean": value})
+        if "var" in fname:
+            bn_collection.update({"var": value})
+
+    if layers_counts["moving-mean"] == layers_counts["moving-var"] \
+        == layers_counts["bn-beta"] == layers_counts["bn-gamma"]:
+        bn_num = layers_counts["moving-mean"] - 1
+        #fname = "bn{}-scale".format(bn_num)
+        value = 0
+        #np.save(os.path.join(rootdir, "{}.npy".format(fname)), value)

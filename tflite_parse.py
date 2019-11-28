@@ -58,7 +58,7 @@ for i, name in tname2id.items():
     if first_dense is False:
         if "dense" in name and "kernel" in name:
             first_dense = True
-            buff = transpose_weights(buff, last_conv_shape, [0, 3, 1, 2])
+            buff = transpose_weights(buff, [-1]+last_conv_shape, [0, 3, 1, 2])
     if len(buff.shape)==4:
         buff = buff.transpose([0, 3, 1, 2])
     # Multiply int-weights to quantization factor in order to get float-weights

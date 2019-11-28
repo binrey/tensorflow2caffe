@@ -1,15 +1,15 @@
-from mnist_model import *
+from mnistcls_model import *
 from PIL import Image
 from utils import vi_convs, vi_denses
 import numpy as np
 import tensorflow as tf
 from matplotlib import pyplot as plt
 
-#conv_ops = ["input", "bnorm0/FusedBatchNorm", "conv1/Conv2D", "bnorm1/FusedBatchNorm", "relu1",
-#            "pool1/MaxPool", "conv2/Conv2D", "bnorm2/FusedBatchNorm", "relu2", "pool2/MaxPool"]
-#denses_ops = ["flatten/Reshape", "dense1/Relu", "dense2/BiasAdd", "probs"]
 
-
+savedir = "./imgs/{}".format(NETNAME)
+#if os.path.exists(savedir) and os.path.isdir(savedir):
+#    shutil.rmtree(savedir)
+#os.mkdir(savedir)
 
 sess = load_for_infer()
 op_names = [n.name for n in tf.get_default_graph().as_graph_def().node]
@@ -43,5 +43,5 @@ for i in range(10):
     plt.title("--{}--\n{:2.4}".format(num2lab[label], conf))
     plt.axis("off")
     plt.suptitle("tensorflow test", fontsize=18)
-plt.savefig("./imgs/{}/res10-tf.png".format(NETNAME))
+plt.savefig(savedir+"/res10-tf.png")
 plt.close()
