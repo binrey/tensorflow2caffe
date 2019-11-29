@@ -2,15 +2,14 @@ import tensorflow as tf
 import numpy as np
 import os
 import shutil
+import selected_layers
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
 NETNAME = "mnistcls"
 num2lab = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-conv_ops = ["input", "conv1/Conv2D", "relu1", "conv2/Conv2D", "relu2"]
-denses_ops = ["flatten/Reshape", "dense1/BiasAdd", "dense2/BiasAdd", "probs"]
 input_op = "input"
-input_shape = [28, 28, 3]
+input_shape = [28, 28, 1]
 last_conv_shape = [7, 7, 32]
 predict_op = "probs"
 data_folder = "mnist"
@@ -20,16 +19,18 @@ def load_data(datasize=1000):
     ((train_data, train_labels),
      (eval_data, eval_labels)) = tf.keras.datasets.mnist.load_data()
 
-    train_data = np.stack([train_data] * 3, axis=-1)[:datasize]
+    if len(train_data.shape)==3:
+        train_data = np.expand_dims(train_data[:datasize], axis=-1)
     train_labels = train_labels[:datasize].astype(np.int32)
 
-    eval_data = np.stack([eval_data] * 3, axis=-1)[:datasize]
+    if len(eval_data.shape) == 3:
+        eval_data = np.expand_dims(eval_data[:datasize], axis=-1)
     eval_labels = eval_labels[:datasize].astype(np.int32)
 
     return train_data, train_labels, eval_data, eval_labels
 
 def inner_structure(input_layer, is_training):
-    x = input_layer#tf.layers.batch_normalization(input_layer, training=is_training, name="bnorm0", epsilon=1e-5)
+    x = tf.add(input_layer, tf.constant(-128, tf.float32))#tf.layers.batch_normalization(input_layer, training=is_training, name="bnorm0", epsilon=1e-5)
     # Convolutional Layer 1
     x = tf.layers.conv2d(
         name="conv1",
@@ -62,7 +63,7 @@ def inner_structure(input_layer, is_training):
     # Flatten layer
     x = tf.layers.flatten(x)
     # Dense Layer 1
-    x = tf.layers.dense(x, units=1024, activation=tf.nn.relu, name="dense1")
+    x = tf.layers.dense(x, units=512, activation=tf.nn.relu, name="dense1")
     #dropout = tf.layers.dropout(
     #    inputs=dense, rate=0.4, training=mode == tf.estimator.ModeKeys.TRAIN)
     # Logits Layer
@@ -76,7 +77,7 @@ def cnn_model_fn(features, labels, mode):
     else:
         is_training = False
 
-    input_layer = tf.reshape(features["x"], [-1, 28, 28, 3])
+    input_layer = tf.reshape(features["x"], [-1]+input_shape)
     logits = inner_structure(input_layer, is_training)
 
     predictions = {
@@ -120,7 +121,7 @@ def load_for_infer(batch_size=None, writelogs=False, load_weights=True):
 
     # Construct the model
     input_layer = tf.placeholder(dtype=tf.float32,
-                                 shape=(batch_size, 28, 28, 3),
+                                 shape=[batch_size]+input_shape,
                                  name="input")
 
     logits = inner_structure(input_layer, is_training=False)

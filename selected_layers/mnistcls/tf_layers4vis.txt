@@ -1,0 +1,9 @@
+input
+conv1/Conv2D
+relu1
+conv2/Conv2D
+relu2
+flatten/Reshape
+dense1/Relu
+dense2/BiasAdd
+probs

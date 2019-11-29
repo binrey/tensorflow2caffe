@@ -22,7 +22,7 @@ layers_counts = {"moving-mean": 0,
 
 sess = load_for_infer()
 
-with open(os.path.join("selected_layers", "{}.txt".format(NETNAME)), "r") as f:
+with open(os.path.join("selected_layers", NETNAME, "export.txt"), "r") as f:
     layers2save = f.read().splitlines()
 
 vars = tf.all_variables()

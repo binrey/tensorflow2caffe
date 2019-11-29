@@ -1,6 +1,5 @@
 import tensorflow as tf
-import numpy as np
-from mnist_model import load_for_infer, load_data
+from mnistcls_model import load_for_infer, load_data
 
 
 def calc_test(sess, test_size=1000):

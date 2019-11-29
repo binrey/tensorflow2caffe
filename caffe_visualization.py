@@ -9,7 +9,7 @@ import shutil
 import numpy as np
 from PIL import Image
 from matplotlib import pyplot as plt
-from utils import vi_convs, vi_denses
+from utils import vi_convs, vi_denses, vi_res10
 
 weights_folder = "./tf_weights/{}/".format(NETNAME)
 
@@ -45,44 +45,33 @@ for layer_name in net.params.keys():
             net.params[layer_name][i].data[...] = np_weights[layer_name + nadd].astype(np.float32)
     print(layer_name)
 
+
+
 # Load test image for visualizations
-img = Image.open("./imgs/test/{}/img3.png".format(data_folder)).resize(input_shape[:2])
-img_arr = np.array(img).astype(np.float32)
-if len(img_arr.shape)<3:
-    img_arr = np.stack([img_arr] * 3, axis=-1)
-img_arr = img_arr.transpose([2, 0, 1])
-net.blobs["input"].data[...] = [img_arr]
+img_num = 3
+eval_data = np.zeros([10]+[input_shape[-1]]+input_shape[:2], dtype=np.uint8)
+for i in range(10):
+    img_arr = np.array(Image.open("./imgs/test/{}/img{}.png".format(data_folder, i)).resize(input_shape[0:2]))
+    if len(img_arr.shape) == 2:
+        img_arr = np.expand_dims(img_arr, axis=0)
+    eval_data[i] = img_arr
+
+net.blobs["input"].data[...] = eval_data
 res = net.forward()["prob"]
+
 
 # Visualization of conv layers outputs
 #conv_ops = ["input", "bnorm0", "conv1", "bnorm1", "relu1", "pool1", "conv2", "bnorm2", "relu2", "pool2"]
-conv_ops = ["input", "conv01", "relu01", "conv02", "relu02"]
-
-rootdir = "./imgs/{}".format(NETNAME)
-#if os.path.exists(rootdir) and os.path.isdir(rootdir):
-#    shutil.rmtree(rootdir)
-#os.mkdir(rootdir)
+rootdir = "./imgs/{}/caffe".format(NETNAME)
+if os.path.exists(rootdir) and os.path.isdir(rootdir):
+    shutil.rmtree(rootdir)
+os.mkdir(rootdir)
 def resfun(op_name):
-    return net.blobs[op_name].data[0]
-vi_convs(conv_ops, resfun, "{}/convs-caffe.png".format(NETNAME), "Caffe")
+    return net.blobs[op_name].data[img_num]
+vi_convs(conv_ops, resfun, os.path.join(rootdir, "convs.png"), "Caffe")
 
 # Visualization of fully connected layers
-denses_ops = ["flatten", "dense01", "dense02", "prob"]
-vi_denses(denses_ops, resfun, "{}/denses-caffe.png".format(NETNAME))
+vi_denses(denses_ops, resfun, os.path.join(rootdir, "denses.png"))
 
 # Run caffe model on test images
-plt.subplots(figsize=(10, 5))
-for i in range(10):
-    img = np.array(Image.open("./imgs/test/{}/img{}.png".format(data_folder, i)).resize(input_shape[:2]))
-    img = np.stack([img] * 3, axis=-1)
-    net.blobs['input'].data[...] = img.transpose([2, 0, 1]).astype(np.float32)
-    preds = net.forward()["prob"]
-
-    label = preds[0].argmax()
-    conf = round(preds[0][label], 3)
-    plt.subplot(2, 5, i+1)
-    plt.imshow(img)
-    plt.title("--{}--\n{:2.4}".format(num2lab[label], conf))
-    plt.axis("off")
-    plt.suptitle("caffe test", fontsize=18)
-plt.savefig("./imgs/{}/res10-caffe.png".format(NETNAME))
+vi_res10(eval_data, res, num2lab, os.path.join(rootdir, "res10.png"))

@@ -1,0 +1,156 @@
+name: "mnist_caffe"
+input: "input"
+input_shape {
+  dim: 1
+  dim: 3
+  dim: 28
+  dim: 28
+}
+#layer {
+#  name: "bn00"
+#  type: "BatchNorm"
+#  bottom: "input"
+#  top: "bn00"
+#  batch_norm_param {use_global_stats: true}
+#}
+layer {
+    name: "bias00"
+    type: "Bias"
+    bottom: "input"
+    top: "bias00"
+}
+layer {
+    name: "moving00"
+    type: "Scale"
+    bottom: "bias00"
+    top: "moving00"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+  name: "conv01"
+  type: "Convolution"
+  bottom: "moving00"
+  top: "conv01"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 2
+    kernel_size: 5
+    stride: 1
+  }
+}
+layer {
+  name: "bn01"
+  type: "BatchNorm"
+  bottom: "conv01"
+  top: "bn01"
+}
+layer {
+    name: "moving01"
+    type: "Scale"
+    bottom: "bn01"
+    top: "bn01"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+  name: "relu01"
+  type: "ReLU"
+  bottom: "bn01"
+  top: "relu01"
+}
+layer {
+  name: "pool01"
+  type: "Pooling"
+  bottom: "relu01"
+  top: "pool01"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv02"
+  type: "Convolution"
+  bottom: "pool01"
+  top: "conv02"
+  convolution_param {
+    num_output: 64
+    bias_term: false
+    pad: 2
+    kernel_size: 5
+    stride: 1
+  }
+}
+layer {
+  name: "bn02"
+  type: "BatchNorm"
+  bottom: "conv02"
+  top: "bn02"
+}
+layer {
+    name: "moving02"
+    type: "Scale"
+    bottom: "bn02"
+    top: "bn02"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+  name: "relu02"
+  type: "ReLU"
+  bottom: "bn02"
+  top: "relu02"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "relu02"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "flatten"
+  type: "Flatten"
+  bottom: "pool2"
+  top: "flatten"
+}
+layer {
+  name: "dense01"
+  type: "InnerProduct"
+  bottom: "flatten"
+  top: "dense01"
+  inner_product_param {
+    num_output: 1024
+  }
+}
+layer {
+  name: "relu03"
+  type: "ReLU"
+  bottom: "dense01"
+  top: "dense01"
+}
+layer {
+  name: "dense02"
+  type: "InnerProduct"
+  bottom: "dense01"
+  top: "dense02"
+  inner_product_param {
+    num_output: 10
+  }
+}
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "dense02"
+  top: "prob"
+}

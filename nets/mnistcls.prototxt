@@ -1,0 +1,139 @@
+name: "mnist_caffe"
+input: "input"
+input_shape {
+  dim: 10
+  dim: 1
+  dim: 28
+  dim: 28
+}
+layer {
+  name: "input/bias"
+  type: "Bias"
+  bottom: "input"
+  top: "input/bias"
+  param {
+    lr_mult: 0.0
+    decay_mult: 0.0
+  }
+  bias_param {
+    filler {
+      type: "constant"
+      value: -128.0
+    }
+  }
+}
+#layer {
+#  name: "moving00"
+#  type: "BatchNorm"
+#  bottom: "input"
+#  top: "moving00"
+#  batch_norm_param {
+#    use_global_stats: true
+#  }
+#}
+#layer {
+#    name: "bn00"
+#    type: "Scale"
+#    bottom: "moving00"
+#    top: "bn00"
+#    scale_param {
+#        bias_term: true
+#    }
+#}
+
+layer {
+  name: "conv01"
+  type: "Convolution"
+  bottom: "input/bias"
+  top: "conv01"
+  convolution_param {
+    num_output: 16
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "relu01"
+  type: "ReLU"
+  bottom: "conv01"
+  top: "relu01"
+}
+layer {
+  name: "pool01"
+  type: "Pooling"
+  bottom: "relu01"
+  top: "pool01"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv02"
+  type: "Convolution"
+  bottom: "pool01"
+  top: "conv02"
+  convolution_param {
+    num_output: 32
+    bias_term: false
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "relu02"
+  type: "ReLU"
+  bottom: "conv02"
+  top: "relu02"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "relu02"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "flatten"
+  type: "Flatten"
+  bottom: "pool2"
+  top: "flatten"
+}
+layer {
+  name: "dense01"
+  type: "InnerProduct"
+  bottom: "flatten"
+  top: "dense01"
+  inner_product_param {
+    num_output: 512
+  }
+}
+layer {
+  name: "relu03"
+  type: "ReLU"
+  bottom: "dense01"
+  top: "dense01"
+}
+layer {
+  name: "dense02"
+  type: "InnerProduct"
+  bottom: "dense01"
+  top: "dense02"
+  inner_product_param {
+    num_output: 10
+  }
+}
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "dense02"
+  top: "prob"
+}

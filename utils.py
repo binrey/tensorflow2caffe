@@ -79,7 +79,7 @@ def vi_convs(op_names, resfun, out_name, conv_format="TF"):
         nop += 1
 
     fig.suptitle("convs outputs", fontsize=18)
-    plt.savefig(os.path.join("./imgs/", out_name))
+    plt.savefig(out_name)
 
 
 def vi_denses(op_names, resfun, out_name):
@@ -96,7 +96,21 @@ def vi_denses(op_names, resfun, out_name):
         ax.set_ylabel(op_name)
         nop += 1
     fig.suptitle("denses outputs", fontsize=18)
-    plt.savefig(os.path.join("./imgs", out_name))
+    plt.savefig(out_name)
+
+
+def vi_res10(eval_data, preds, num2lab, img_name):
+    eval_data = eval_data.squeeze()
+    plt.subplots(figsize=(10, 5))
+    for i in range(10):
+        label = preds[i].argmax()
+        conf = round(preds[i][label], 3)
+        plt.subplot(2, 5, i + 1)
+        plt.imshow(eval_data[i])
+        plt.title("--{}--\n{:2.4}".format(num2lab[label], conf))
+        plt.axis("off")
+        plt.suptitle("tensorflow test", fontsize=18)
+    plt.savefig(img_name)
 
 
 def rename_tf_layer(name, lcounts):
