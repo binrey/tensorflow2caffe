@@ -55,7 +55,7 @@ def simp_save():
     print("saved model in {}".format(out_dir))
 
 
-def vi_convs(op_names, resfun, out_name, conv_format="TF"):
+def vi_convs(op_names, resfun, out_name, title="convs outputs", conv_format="TF"):
     """ Outputs of conv layers """
     plt.close()
     fig, axs = plt.subplots(len(op_names), 10, figsize=(10, 1.3*len(op_names)))
@@ -63,6 +63,8 @@ def vi_convs(op_names, resfun, out_name, conv_format="TF"):
     nop = 0
     for op_name in op_names:
         lres = resfun(op_name)
+        if len(lres.shape)<3:
+            continue
         print("{}: mean={:.2f}, var={:.2f}".format(op_name.ljust(30, "."), lres.mean(), lres.var()))
         for i in range(10):
             ax = axs[nop, i]
@@ -78,11 +80,11 @@ def vi_convs(op_names, resfun, out_name, conv_format="TF"):
             ax.imshow(filt)
         nop += 1
 
-    fig.suptitle("convs outputs", fontsize=18)
+    fig.suptitle(title, fontsize=18)
     plt.savefig(out_name)
 
 
-def vi_denses(op_names, resfun, out_name):
+def vi_denses(op_names, resfun, out_name, title="dense outputs"):
     """ Outputs of fully-connected layers """
     plt.close()
     fig, axs = plt.subplots(len(op_names), 1, figsize=(10, 1.6*len(op_names)))
@@ -90,16 +92,18 @@ def vi_denses(op_names, resfun, out_name):
     nop = 0
     for op_name in op_names:
         filt = resfun(op_name)
+        if len(filt.shape)>1:
+            continue
         ax = axs[nop]
         ax.bar(range(len(filt)), filt, 1)
         ax.grid(True)
         ax.set_ylabel(op_name)
         nop += 1
-    fig.suptitle("denses outputs", fontsize=18)
+    fig.suptitle(title, fontsize=18)
     plt.savefig(out_name)
 
 
-def vi_res10(eval_data, preds, num2lab, img_name):
+def vi_res10(eval_data, preds, num2lab, img_name, title):
     eval_data = eval_data.squeeze()
     plt.subplots(figsize=(10, 5))
     for i in range(10):
@@ -109,7 +113,7 @@ def vi_res10(eval_data, preds, num2lab, img_name):
         plt.imshow(eval_data[i])
         plt.title("--{}--\n{:2.4}".format(num2lab[label], conf))
         plt.axis("off")
-        plt.suptitle("tensorflow test", fontsize=18)
+        plt.suptitle(title, fontsize=18)
     plt.savefig(img_name)
 
 

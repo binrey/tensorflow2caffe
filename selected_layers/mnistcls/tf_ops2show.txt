@@ -1,8 +1,11 @@
-input
+input/Add
 conv1/Conv2D
+bn1/FusedBatchNorm
 relu1
 conv2/Conv2D
+bn2/FusedBatchNorm
 relu2
+---
 flatten/Reshape
 dense1/Relu
 dense2/BiasAdd

@@ -22,25 +22,6 @@ layer {
     }
   }
 }
-#layer {
-#  name: "moving00"
-#  type: "BatchNorm"
-#  bottom: "input"
-#  top: "moving00"
-#  batch_norm_param {
-#    use_global_stats: true
-#  }
-#}
-#layer {
-#    name: "bn00"
-#    type: "Scale"
-#    bottom: "moving00"
-#    top: "bn00"
-#    scale_param {
-#        bias_term: true
-#    }
-#}
-
 layer {
   name: "conv01"
   type: "Convolution"
@@ -55,9 +36,27 @@ layer {
   }
 }
 layer {
+  name: "moving01"
+  type: "BatchNorm"
+  bottom: "conv01"
+  top: "moving01"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+    name: "bn01"
+    type: "Scale"
+    bottom: "moving01"
+    top: "bn01"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
   name: "relu01"
   type: "ReLU"
-  bottom: "conv01"
+  bottom: "bn01"
   top: "relu01"
 }
 layer {
@@ -85,9 +84,27 @@ layer {
   }
 }
 layer {
+  name: "moving02"
+  type: "BatchNorm"
+  bottom: "conv02"
+  top: "moving02"
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+    name: "bn02"
+    type: "Scale"
+    bottom: "moving02"
+    top: "bn02"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
   name: "relu02"
   type: "ReLU"
-  bottom: "conv02"
+  bottom: "bn02"
   top: "relu02"
 }
 layer {

@@ -2,7 +2,6 @@ import tensorflow as tf
 import numpy as np
 import os
 import shutil
-import selected_layers
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
@@ -30,7 +29,7 @@ def load_data(datasize=1000):
     return train_data, train_labels, eval_data, eval_labels
 
 def inner_structure(input_layer, is_training):
-    x = tf.add(input_layer, tf.constant(-128, tf.float32))#tf.layers.batch_normalization(input_layer, training=is_training, name="bnorm0", epsilon=1e-5)
+    x = tf.add(input_layer, tf.constant(-128, tf.float32), name="input/Add")#tf.layers.batch_normalization(input_layer, training=is_training, name="bnorm0", epsilon=1e-5)
     # Convolutional Layer 1
     x = tf.layers.conv2d(
         name="conv1",
@@ -40,7 +39,7 @@ def inner_structure(input_layer, is_training):
         padding="same",
         use_bias=False)
     # Batch normalization layer 1
-    #x = tf.layers.batch_normalization(x, training=is_training, name="bnorm1", epsilon=1e-5)
+    x = tf.layers.batch_normalization(x, training=is_training, name="bn1")
     # ReLu activation 1
     x = tf.nn.relu(x, "relu1")
     # Pooling Layer #1
@@ -55,7 +54,7 @@ def inner_structure(input_layer, is_training):
         use_bias=False,
         name="conv2")
     # Batch normalization layer 2
-    #x = tf.layers.batch_normalization(x, training=is_training, name="bnorm2", epsilon=1e-5)
+    x = tf.layers.batch_normalization(x, training=is_training, name="bn2")
     # ReLu activation 2
     x = tf.nn.relu(x, name='relu2')
     # Pooling Layer 2
@@ -77,7 +76,7 @@ def cnn_model_fn(features, labels, mode):
     else:
         is_training = False
 
-    input_layer = tf.reshape(features["x"], [-1]+input_shape)
+    input_layer = tf.reshape(features["input"], [-1]+input_shape)
     logits = inner_structure(input_layer, is_training)
 
     predictions = {

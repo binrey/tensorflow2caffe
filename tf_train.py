@@ -19,7 +19,7 @@ logging_hook = tf.train.LoggingTensorHook(
 
 # Train the model
 train_input_fn = tf.estimator.inputs.numpy_input_fn(
-    x={"x": train_data.astype(np.float32)},
+    x={"input": train_data.astype(np.float32)},
     y=train_labels,
     batch_size=100,
     num_epochs=50,
@@ -28,7 +28,7 @@ train_input_fn = tf.estimator.inputs.numpy_input_fn(
 mnist_classifier.train(input_fn=train_input_fn)
 
 eval_input_fn = tf.estimator.inputs.numpy_input_fn(
-    x={"x": eval_data.astype(np.float32)},
+    x={"input": eval_data.astype(np.float32)},
     y=eval_labels,
     num_epochs=1,
     shuffle=False)

@@ -11,10 +11,10 @@ if os.path.exists(rootdir) and os.path.isdir(rootdir):
     shutil.rmtree(rootdir)
 os.mkdir(rootdir)
 
-layers_counts = {"moving-mean": 0,
-                 "moving-var": 0,
-                 "bn-beta": 0,
-                 "bn-gamma": 0,
+layers_counts = {"moving-mean": 1,
+                 "moving-var": 1,
+                 "bn-beta": 1,
+                 "bn-gamma": 1,
                  "conv-kernel": 1,
                  "conv-bias": 1,
                  "dense-kernel": 1,
@@ -22,7 +22,7 @@ layers_counts = {"moving-mean": 0,
 
 sess = load_for_infer()
 
-with open(os.path.join("selected_layers", NETNAME, "export.txt"), "r") as f:
+with open(os.path.join("selected_layers", NETNAME, "layers2save.txt"), "r") as f:
     layers2save = f.read().splitlines()
 
 vars = tf.all_variables()
@@ -67,5 +67,5 @@ for var in vars:
         == layers_counts["bn-beta"] == layers_counts["bn-gamma"]:
         bn_num = layers_counts["moving-mean"] - 1
         #fname = "bn{}-scale".format(bn_num)
-        value = 0
+        #value = 0
         #np.save(os.path.join(rootdir, "{}.npy".format(fname)), value)

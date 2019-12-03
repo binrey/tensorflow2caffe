@@ -1093,7 +1093,7 @@ node {
   }
 }
 node {
-  name: "Add"
+  name: "input/Add"
   op: "Add"
   input: "Reshape"
   input: "Const"
@@ -1616,7 +1616,7 @@ node {
 node {
   name: "conv1/Conv2D"
   op: "Conv2D"
-  input: "Add"
+  input: "input/Add"
   input: "conv1/kernel/read"
   attr {
     key: "T"
@@ -1694,9 +1694,1201 @@ node {
   }
 }
 node {
+  name: "bn1/gamma/Initializer/ones"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 16
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "bn1/gamma"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 16
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "bn1/gamma/Assign"
+  op: "Assign"
+  input: "bn1/gamma"
+  input: "bn1/gamma/Initializer/ones"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn1/gamma/read"
+  op: "Identity"
+  input: "bn1/gamma"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/beta/Initializer/zeros"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 16
+          }
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "bn1/beta"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 16
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "bn1/beta/Assign"
+  op: "Assign"
+  input: "bn1/beta"
+  input: "bn1/beta/Initializer/zeros"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn1/beta/read"
+  op: "Identity"
+  input: "bn1/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/moving_mean/Initializer/zeros"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 16
+          }
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "bn1/moving_mean"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 16
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "bn1/moving_mean/Assign"
+  op: "Assign"
+  input: "bn1/moving_mean"
+  input: "bn1/moving_mean/Initializer/zeros"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn1/moving_mean/read"
+  op: "Identity"
+  input: "bn1/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/moving_variance/Initializer/ones"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 16
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "bn1/moving_variance"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 16
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "bn1/moving_variance/Assign"
+  op: "Assign"
+  input: "bn1/moving_variance"
+  input: "bn1/moving_variance/Initializer/ones"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn1/moving_variance/read"
+  op: "Identity"
+  input: "bn1/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/Const"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/Const_1"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv1/Conv2D"
+  input: "bn1/gamma/read"
+  input: "bn1/beta/read"
+  input: "bn1/Const"
+  input: "bn1/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 28
+          }
+          dim {
+            size: 28
+          }
+          dim {
+            size: 16
+          }
+        }
+        shape {
+          dim {
+            size: 16
+          }
+        }
+        shape {
+          dim {
+            size: 16
+          }
+        }
+        shape {
+          dim {
+            size: 16
+          }
+        }
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn1/Const_2"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.990000009537
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg/sub"
+  op: "Sub"
+  input: "bn1/AssignMovingAvg/sub/x"
+  input: "bn1/Const_2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg/sub_1"
+  op: "Sub"
+  input: "bn1/moving_mean/read"
+  input: "bn1/FusedBatchNorm:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg/mul"
+  op: "Mul"
+  input: "bn1/AssignMovingAvg/sub_1"
+  input: "bn1/AssignMovingAvg/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg"
+  op: "AssignSub"
+  input: "bn1/moving_mean"
+  input: "bn1/AssignMovingAvg/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg_1/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg_1/sub"
+  op: "Sub"
+  input: "bn1/AssignMovingAvg_1/sub/x"
+  input: "bn1/Const_2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg_1/sub_1"
+  op: "Sub"
+  input: "bn1/moving_variance/read"
+  input: "bn1/FusedBatchNorm:2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg_1/mul"
+  op: "Mul"
+  input: "bn1/AssignMovingAvg_1/sub_1"
+  input: "bn1/AssignMovingAvg_1/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn1/AssignMovingAvg_1"
+  op: "AssignSub"
+  input: "bn1/moving_variance"
+  input: "bn1/AssignMovingAvg_1/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
   name: "relu1"
   op: "Relu"
-  input: "conv1/Conv2D"
+  input: "bn1/FusedBatchNorm"
   attr {
     key: "T"
     value {
@@ -2360,9 +3552,1201 @@ node {
   }
 }
 node {
+  name: "bn2/gamma/Initializer/ones"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "bn2/gamma"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 32
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "bn2/gamma/Assign"
+  op: "Assign"
+  input: "bn2/gamma"
+  input: "bn2/gamma/Initializer/ones"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn2/gamma/read"
+  op: "Identity"
+  input: "bn2/gamma"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/beta/Initializer/zeros"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "bn2/beta"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 32
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "bn2/beta/Assign"
+  op: "Assign"
+  input: "bn2/beta"
+  input: "bn2/beta/Initializer/zeros"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn2/beta/read"
+  op: "Identity"
+  input: "bn2/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/moving_mean/Initializer/zeros"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "bn2/moving_mean"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 32
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "bn2/moving_mean/Assign"
+  op: "Assign"
+  input: "bn2/moving_mean"
+  input: "bn2/moving_mean/Initializer/zeros"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn2/moving_mean/read"
+  op: "Identity"
+  input: "bn2/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/moving_variance/Initializer/ones"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "bn2/moving_variance"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 32
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "bn2/moving_variance/Assign"
+  op: "Assign"
+  input: "bn2/moving_variance"
+  input: "bn2/moving_variance/Initializer/ones"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn2/moving_variance/read"
+  op: "Identity"
+  input: "bn2/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/Const"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/Const_1"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv2/Conv2D"
+  input: "bn2/gamma/read"
+  input: "bn2/beta/read"
+  input: "bn2/Const"
+  input: "bn2/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 14
+          }
+          dim {
+            size: 14
+          }
+          dim {
+            size: 32
+          }
+        }
+        shape {
+          dim {
+            size: 32
+          }
+        }
+        shape {
+          dim {
+            size: 32
+          }
+        }
+        shape {
+          dim {
+            size: 32
+          }
+        }
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "bn2/Const_2"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.990000009537
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg/sub"
+  op: "Sub"
+  input: "bn2/AssignMovingAvg/sub/x"
+  input: "bn2/Const_2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg/sub_1"
+  op: "Sub"
+  input: "bn2/moving_mean/read"
+  input: "bn2/FusedBatchNorm:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg/mul"
+  op: "Mul"
+  input: "bn2/AssignMovingAvg/sub_1"
+  input: "bn2/AssignMovingAvg/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg"
+  op: "AssignSub"
+  input: "bn2/moving_mean"
+  input: "bn2/AssignMovingAvg/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg_1/sub/x"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg_1/sub"
+  op: "Sub"
+  input: "bn2/AssignMovingAvg_1/sub/x"
+  input: "bn2/Const_2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg_1/sub_1"
+  op: "Sub"
+  input: "bn2/moving_variance/read"
+  input: "bn2/FusedBatchNorm:2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg_1/mul"
+  op: "Mul"
+  input: "bn2/AssignMovingAvg_1/sub_1"
+  input: "bn2/AssignMovingAvg_1/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "bn2/AssignMovingAvg_1"
+  op: "AssignSub"
+  input: "bn2/moving_variance"
+  input: "bn2/AssignMovingAvg_1/mul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
   name: "relu2"
   op: "Relu"
-  input: "conv2/Conv2D"
+  input: "bn2/FusedBatchNorm"
   attr {
     key: "T"
     value {
@@ -5100,6 +7484,10 @@ node {
 node {
   name: "gradients/Shape"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -5133,6 +7521,10 @@ node {
 node {
   name: "gradients/grad_ys_0"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -5190,6 +7582,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/value_grad/Shape"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -5223,6 +7619,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/value_grad/Shape_1"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -5367,6 +7767,10 @@ node {
   name: "gradients/sparse_softmax_cross_entropy_loss/value_grad/Neg"
   op: "Neg"
   input: "sparse_softmax_cross_entropy_loss/Sum_1"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "T"
     value {
@@ -5509,6 +7913,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/value_grad/tuple/group_deps"
   op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   input: "^gradients/sparse_softmax_cross_entropy_loss/value_grad/Reshape"
   input: "^gradients/sparse_softmax_cross_entropy_loss/value_grad/Reshape_1"
 }
@@ -5573,6 +7981,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Sum_1_grad/Reshape/shape"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -5633,6 +8045,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Sum_1_grad/Const"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -5693,6 +8109,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Reshape/shape"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -5760,6 +8180,10 @@ node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Sum_grad/Shape"
   op: "Shape"
   input: "sparse_softmax_cross_entropy_loss/Mul"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "T"
     value {
@@ -5819,6 +8243,10 @@ node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Shape"
   op: "Shape"
   input: "sparse_softmax_cross_entropy_loss/xentropy/xentropy"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "T"
     value {
@@ -5847,6 +8275,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Shape_1"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -6082,6 +8514,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/Mul_grad/tuple/group_deps"
   op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   input: "^gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Reshape"
   input: "^gradients/sparse_softmax_cross_entropy_loss/Mul_grad/Reshape_1"
 }
@@ -6150,6 +8586,10 @@ node {
   name: "gradients/zeros_like"
   op: "ZerosLike"
   input: "sparse_softmax_cross_entropy_loss/xentropy/xentropy:1"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "T"
     value {
@@ -6176,6 +8616,10 @@ node {
   name: "gradients/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/PreventGradient"
   op: "PreventGradient"
   input: "sparse_softmax_cross_entropy_loss/xentropy/xentropy:1"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "T"
     value {
@@ -6207,6 +8651,10 @@ node {
 node {
   name: "gradients/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/ExpandDims/dim"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -6326,6 +8774,10 @@ node {
 node {
   name: "gradients/dense2/BiasAdd_grad/tuple/group_deps"
   op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   input: "^gradients/dense2/BiasAdd_grad/BiasAddGrad"
   input: "^gradients/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/mul"
 }
@@ -6477,6 +8929,10 @@ node {
 node {
   name: "gradients/dense2/MatMul_grad/tuple/group_deps"
   op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   input: "^gradients/dense2/MatMul_grad/MatMul"
   input: "^gradients/dense2/MatMul_grad/MatMul_1"
 }
@@ -6609,6 +9065,10 @@ node {
 node {
   name: "gradients/dense1/BiasAdd_grad/tuple/group_deps"
   op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   input: "^gradients/dense1/BiasAdd_grad/BiasAddGrad"
   input: "^gradients/dense1/Relu_grad/ReluGrad"
 }
@@ -6760,6 +9220,10 @@ node {
 node {
   name: "gradients/dense1/MatMul_grad/tuple/group_deps"
   op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   input: "^gradients/dense1/MatMul_grad/MatMul"
   input: "^gradients/dense1/MatMul_grad/MatMul_1"
 }
@@ -6837,6 +9301,10 @@ node {
   name: "gradients/flatten/Reshape_grad/Shape"
   op: "Shape"
   input: "pool2/MaxPool"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "T"
     value {
@@ -7003,10 +9471,370 @@ node {
   }
 }
 node {
+  name: "gradients/zeros_like_1"
+  op: "ZerosLike"
+  input: "bn2/FusedBatchNorm:1"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/zeros_like_2"
+  op: "ZerosLike"
+  input: "bn2/FusedBatchNorm:2"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/zeros_like_3"
+  op: "ZerosLike"
+  input: "bn2/FusedBatchNorm:3"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/zeros_like_4"
+  op: "ZerosLike"
+  input: "bn2/FusedBatchNorm:4"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad"
+  op: "FusedBatchNormGrad"
+  input: "gradients/relu2_grad/ReluGrad"
+  input: "conv2/Conv2D"
+  input: "bn2/gamma/read"
+  input: "bn2/FusedBatchNorm:3"
+  input: "bn2/FusedBatchNorm:4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 14
+          }
+          dim {
+            size: 14
+          }
+          dim {
+            size: 32
+          }
+        }
+        shape {
+          dim {
+            size: 32
+          }
+        }
+        shape {
+          dim {
+            size: 32
+          }
+        }
+        shape {
+          dim {
+          }
+        }
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "gradients/bn2/FusedBatchNorm_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  input: "^gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad"
+}
+node {
+  name: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad"
+  input: "^gradients/bn2/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 14
+          }
+          dim {
+            size: 14
+          }
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad:1"
+  input: "^gradients/bn2/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency_2"
+  op: "Identity"
+  input: "gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad:2"
+  input: "^gradients/bn2/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency_3"
+  op: "Identity"
+  input: "gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad:3"
+  input: "^gradients/bn2/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency_4"
+  op: "Identity"
+  input: "gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad:4"
+  input: "^gradients/bn2/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn2/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "gradients/conv2/Conv2D_grad/ShapeN"
   op: "ShapeN"
   input: "pool1/MaxPool"
   input: "conv2/kernel/read"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "N"
     value {
@@ -7048,7 +9876,7 @@ node {
   op: "Conv2DBackpropInput"
   input: "gradients/conv2/Conv2D_grad/ShapeN"
   input: "conv2/kernel/read"
-  input: "gradients/relu2_grad/ReluGrad"
+  input: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency"
   attr {
     key: "T"
     value {
@@ -7129,7 +9957,7 @@ node {
   op: "Conv2DBackpropFilter"
   input: "pool1/MaxPool"
   input: "gradients/conv2/Conv2D_grad/ShapeN:1"
-  input: "gradients/relu2_grad/ReluGrad"
+  input: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency"
   attr {
     key: "T"
     value {
@@ -7208,6 +10036,10 @@ node {
 node {
   name: "gradients/conv2/Conv2D_grad/tuple/group_deps"
   op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   input: "^gradients/conv2/Conv2D_grad/Conv2DBackpropFilter"
   input: "^gradients/conv2/Conv2D_grad/Conv2DBackpropInput"
 }
@@ -7395,10 +10227,370 @@ node {
   }
 }
 node {
+  name: "gradients/zeros_like_5"
+  op: "ZerosLike"
+  input: "bn1/FusedBatchNorm:1"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/zeros_like_6"
+  op: "ZerosLike"
+  input: "bn1/FusedBatchNorm:2"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/zeros_like_7"
+  op: "ZerosLike"
+  input: "bn1/FusedBatchNorm:3"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/zeros_like_8"
+  op: "ZerosLike"
+  input: "bn1/FusedBatchNorm:4"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad"
+  op: "FusedBatchNormGrad"
+  input: "gradients/relu1_grad/ReluGrad"
+  input: "conv1/Conv2D"
+  input: "bn1/gamma/read"
+  input: "bn1/FusedBatchNorm:3"
+  input: "bn1/FusedBatchNorm:4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 28
+          }
+          dim {
+            size: 28
+          }
+          dim {
+            size: 16
+          }
+        }
+        shape {
+          dim {
+            size: 16
+          }
+        }
+        shape {
+          dim {
+            size: 16
+          }
+        }
+        shape {
+          dim {
+          }
+        }
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "gradients/bn1/FusedBatchNorm_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
+  input: "^gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad"
+}
+node {
+  name: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad"
+  input: "^gradients/bn1/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 28
+          }
+          dim {
+            size: 28
+          }
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad:1"
+  input: "^gradients/bn1/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency_2"
+  op: "Identity"
+  input: "gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad:2"
+  input: "^gradients/bn1/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency_3"
+  op: "Identity"
+  input: "gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad:3"
+  input: "^gradients/bn1/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency_4"
+  op: "Identity"
+  input: "gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad:4"
+  input: "^gradients/bn1/FusedBatchNorm_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@gradients/bn1/FusedBatchNorm_grad/FusedBatchNormGrad"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "gradients/conv1/Conv2D_grad/ShapeN"
   op: "ShapeN"
-  input: "Add"
+  input: "input/Add"
   input: "conv1/kernel/read"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "N"
     value {
@@ -7440,7 +10632,7 @@ node {
   op: "Conv2DBackpropInput"
   input: "gradients/conv1/Conv2D_grad/ShapeN"
   input: "conv1/kernel/read"
-  input: "gradients/relu1_grad/ReluGrad"
+  input: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency"
   attr {
     key: "T"
     value {
@@ -7519,9 +10711,9 @@ node {
 node {
   name: "gradients/conv1/Conv2D_grad/Conv2DBackpropFilter"
   op: "Conv2DBackpropFilter"
-  input: "Add"
+  input: "input/Add"
   input: "gradients/conv1/Conv2D_grad/ShapeN:1"
-  input: "gradients/relu1_grad/ReluGrad"
+  input: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency"
   attr {
     key: "T"
     value {
@@ -7600,6 +10792,10 @@ node {
 node {
   name: "gradients/conv1/Conv2D_grad/tuple/group_deps"
   op: "NoOp"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   input: "^gradients/conv1/Conv2D_grad/Conv2DBackpropFilter"
   input: "^gradients/conv1/Conv2D_grad/Conv2DBackpropInput"
 }
@@ -7688,6 +10884,10 @@ node {
 node {
   name: "GradientDescent/learning_rate"
   op: "Const"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_output_shapes"
     value {
@@ -7764,6 +10964,84 @@ node {
   }
 }
 node {
+  name: "GradientDescent/update_bn1/gamma/ApplyGradientDescent"
+  op: "ApplyGradientDescent"
+  input: "bn1/gamma"
+  input: "GradientDescent/learning_rate"
+  input: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "GradientDescent/update_bn1/beta/ApplyGradientDescent"
+  op: "ApplyGradientDescent"
+  input: "bn1/beta"
+  input: "GradientDescent/learning_rate"
+  input: "gradients/bn1/FusedBatchNorm_grad/tuple/control_dependency_2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
   name: "GradientDescent/update_conv2/kernel/ApplyGradientDescent"
   op: "ApplyGradientDescent"
   input: "conv2/kernel"
@@ -7797,6 +11075,84 @@ node {
           dim {
             size: 16
           }
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "GradientDescent/update_bn2/gamma/ApplyGradientDescent"
+  op: "ApplyGradientDescent"
+  input: "bn2/gamma"
+  input: "GradientDescent/learning_rate"
+  input: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "GradientDescent/update_bn2/beta/ApplyGradientDescent"
+  op: "ApplyGradientDescent"
+  input: "bn2/beta"
+  input: "GradientDescent/learning_rate"
+  input: "gradients/bn2/FusedBatchNorm_grad/tuple/control_dependency_2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
           dim {
             size: 32
           }
@@ -7976,17 +11332,29 @@ node {
 node {
   name: "GradientDescent/update"
   op: "NoOp"
+  input: "^GradientDescent/update_bn1/beta/ApplyGradientDescent"
+  input: "^GradientDescent/update_bn1/gamma/ApplyGradientDescent"
+  input: "^GradientDescent/update_bn2/beta/ApplyGradientDescent"
+  input: "^GradientDescent/update_bn2/gamma/ApplyGradientDescent"
   input: "^GradientDescent/update_conv1/kernel/ApplyGradientDescent"
   input: "^GradientDescent/update_conv2/kernel/ApplyGradientDescent"
   input: "^GradientDescent/update_dense1/bias/ApplyGradientDescent"
   input: "^GradientDescent/update_dense1/kernel/ApplyGradientDescent"
   input: "^GradientDescent/update_dense2/bias/ApplyGradientDescent"
   input: "^GradientDescent/update_dense2/kernel/ApplyGradientDescent"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
 }
 node {
   name: "GradientDescent/value"
   op: "Const"
   input: "^GradientDescent/update"
+  input: "^bn1/AssignMovingAvg"
+  input: "^bn1/AssignMovingAvg_1"
+  input: "^bn2/AssignMovingAvg"
+  input: "^bn2/AssignMovingAvg_1"
   attr {
     key: "_class"
     value {
@@ -8111,6 +11479,14 @@ node {
 node {
   name: "init"
   op: "NoOp"
+  input: "^bn1/beta/Assign"
+  input: "^bn1/gamma/Assign"
+  input: "^bn1/moving_mean/Assign"
+  input: "^bn1/moving_variance/Assign"
+  input: "^bn2/beta/Assign"
+  input: "^bn2/gamma/Assign"
+  input: "^bn2/moving_mean/Assign"
+  input: "^bn2/moving_variance/Assign"
   input: "^conv1/kernel/Assign"
   input: "^conv2/kernel/Assign"
   input: "^dense1/bias/Assign"
@@ -8188,6 +11564,118 @@ node {
 node {
   name: "report_uninitialized_variables/IsVariableInitialized_2"
   op: "IsVariableInitialized"
+  input: "bn1/gamma"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_3"
+  op: "IsVariableInitialized"
+  input: "bn1/beta"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_4"
+  op: "IsVariableInitialized"
+  input: "bn1/moving_mean"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_5"
+  op: "IsVariableInitialized"
+  input: "bn1/moving_variance"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_6"
+  op: "IsVariableInitialized"
   input: "conv2/kernel"
   attr {
     key: "_class"
@@ -8214,7 +11702,119 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_3"
+  name: "report_uninitialized_variables/IsVariableInitialized_7"
+  op: "IsVariableInitialized"
+  input: "bn2/gamma"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_8"
+  op: "IsVariableInitialized"
+  input: "bn2/beta"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_9"
+  op: "IsVariableInitialized"
+  input: "bn2/moving_mean"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_10"
+  op: "IsVariableInitialized"
+  input: "bn2/moving_variance"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables/IsVariableInitialized_11"
   op: "IsVariableInitialized"
   input: "dense1/kernel"
   attr {
@@ -8242,7 +11842,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_4"
+  name: "report_uninitialized_variables/IsVariableInitialized_12"
   op: "IsVariableInitialized"
   input: "dense1/bias"
   attr {
@@ -8270,7 +11870,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_5"
+  name: "report_uninitialized_variables/IsVariableInitialized_13"
   op: "IsVariableInitialized"
   input: "dense2/kernel"
   attr {
@@ -8298,7 +11898,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables/IsVariableInitialized_6"
+  name: "report_uninitialized_variables/IsVariableInitialized_14"
   op: "IsVariableInitialized"
   input: "dense2/bias"
   attr {
@@ -8335,11 +11935,19 @@ node {
   input: "report_uninitialized_variables/IsVariableInitialized_4"
   input: "report_uninitialized_variables/IsVariableInitialized_5"
   input: "report_uninitialized_variables/IsVariableInitialized_6"
+  input: "report_uninitialized_variables/IsVariableInitialized_7"
+  input: "report_uninitialized_variables/IsVariableInitialized_8"
+  input: "report_uninitialized_variables/IsVariableInitialized_9"
+  input: "report_uninitialized_variables/IsVariableInitialized_10"
+  input: "report_uninitialized_variables/IsVariableInitialized_11"
+  input: "report_uninitialized_variables/IsVariableInitialized_12"
+  input: "report_uninitialized_variables/IsVariableInitialized_13"
+  input: "report_uninitialized_variables/IsVariableInitialized_14"
   device: "/device:CPU:0"
   attr {
     key: "N"
     value {
-      i: 7
+      i: 15
     }
   }
   attr {
@@ -8354,7 +11962,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -8378,7 +11986,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -8395,7 +12003,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -8414,12 +12022,20 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 7
+            size: 15
           }
         }
         string_val: "global_step"
         string_val: "conv1/kernel"
+        string_val: "bn1/gamma"
+        string_val: "bn1/beta"
+        string_val: "bn1/moving_mean"
+        string_val: "bn1/moving_variance"
         string_val: "conv2/kernel"
+        string_val: "bn2/gamma"
+        string_val: "bn2/beta"
+        string_val: "bn2/moving_mean"
+        string_val: "bn2/moving_variance"
         string_val: "dense1/kernel"
         string_val: "dense1/bias"
         string_val: "dense2/kernel"
@@ -8460,7 +12076,7 @@ node {
             size: 1
           }
         }
-        int_val: 7
+        int_val: 15
       }
     }
   }
@@ -8742,7 +12358,7 @@ node {
             size: 1
           }
         }
-        int_val: 7
+        int_val: 15
       }
     }
   }
@@ -8952,7 +12568,7 @@ node {
             size: 1
           }
         }
-        int_val: 7
+        int_val: 15
       }
     }
   }
@@ -9260,7 +12876,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -9328,7 +12944,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -9629,6 +13245,118 @@ node {
 node {
   name: "report_uninitialized_variables_1/IsVariableInitialized_2"
   op: "IsVariableInitialized"
+  input: "bn1/gamma"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_3"
+  op: "IsVariableInitialized"
+  input: "bn1/beta"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_4"
+  op: "IsVariableInitialized"
+  input: "bn1/moving_mean"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_5"
+  op: "IsVariableInitialized"
+  input: "bn1/moving_variance"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_6"
+  op: "IsVariableInitialized"
   input: "conv2/kernel"
   attr {
     key: "_class"
@@ -9655,7 +13383,119 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_3"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_7"
+  op: "IsVariableInitialized"
+  input: "bn2/gamma"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_8"
+  op: "IsVariableInitialized"
+  input: "bn2/beta"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_9"
+  op: "IsVariableInitialized"
+  input: "bn2/moving_mean"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_10"
+  op: "IsVariableInitialized"
+  input: "bn2/moving_variance"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "report_uninitialized_variables_1/IsVariableInitialized_11"
   op: "IsVariableInitialized"
   input: "dense1/kernel"
   attr {
@@ -9683,7 +13523,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_4"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_12"
   op: "IsVariableInitialized"
   input: "dense1/bias"
   attr {
@@ -9711,7 +13551,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_5"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_13"
   op: "IsVariableInitialized"
   input: "dense2/kernel"
   attr {
@@ -9739,7 +13579,7 @@ node {
   }
 }
 node {
-  name: "report_uninitialized_variables_1/IsVariableInitialized_6"
+  name: "report_uninitialized_variables_1/IsVariableInitialized_14"
   op: "IsVariableInitialized"
   input: "dense2/bias"
   attr {
@@ -9776,11 +13616,19 @@ node {
   input: "report_uninitialized_variables_1/IsVariableInitialized_4"
   input: "report_uninitialized_variables_1/IsVariableInitialized_5"
   input: "report_uninitialized_variables_1/IsVariableInitialized_6"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_7"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_8"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_9"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_10"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_11"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_12"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_13"
+  input: "report_uninitialized_variables_1/IsVariableInitialized_14"
   device: "/device:CPU:0"
   attr {
     key: "N"
     value {
-      i: 7
+      i: 15
     }
   }
   attr {
@@ -9795,7 +13643,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -9819,7 +13667,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -9836,7 +13684,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -9855,12 +13703,20 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 7
+            size: 15
           }
         }
         string_val: "global_step"
         string_val: "conv1/kernel"
+        string_val: "bn1/gamma"
+        string_val: "bn1/beta"
+        string_val: "bn1/moving_mean"
+        string_val: "bn1/moving_variance"
         string_val: "conv2/kernel"
+        string_val: "bn2/gamma"
+        string_val: "bn2/beta"
+        string_val: "bn2/moving_mean"
+        string_val: "bn2/moving_variance"
         string_val: "dense1/kernel"
         string_val: "dense1/bias"
         string_val: "dense2/kernel"
@@ -9901,7 +13757,7 @@ node {
             size: 1
           }
         }
-        int_val: 7
+        int_val: 15
       }
     }
   }
@@ -10183,7 +14039,7 @@ node {
             size: 1
           }
         }
-        int_val: 7
+        int_val: 15
       }
     }
   }
@@ -10393,7 +14249,7 @@ node {
             size: 1
           }
         }
-        int_val: 7
+        int_val: 15
       }
     }
   }
@@ -10701,7 +14557,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -10769,7 +14625,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -11160,7 +15016,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_d93291c0672044bcb92693b0ae539991/part"
+        string_val: "_temp_25b9908b08f64f4880722a686fdac652/part"
       }
     }
   }
@@ -11280,7 +15136,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -11299,9 +15155,17 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 7
+            size: 15
           }
         }
+        string_val: "bn1/beta"
+        string_val: "bn1/gamma"
+        string_val: "bn1/moving_mean"
+        string_val: "bn1/moving_variance"
+        string_val: "bn2/beta"
+        string_val: "bn2/gamma"
+        string_val: "bn2/moving_mean"
+        string_val: "bn2/moving_variance"
         string_val: "conv1/kernel"
         string_val: "conv2/kernel"
         string_val: "dense1/bias"
@@ -11323,7 +15187,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -11342,9 +15206,17 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 7
+            size: 15
           }
         }
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
         string_val: ""
         string_val: ""
         string_val: ""
@@ -11362,6 +15234,14 @@ node {
   input: "save/ShardedFilename"
   input: "save/SaveV2/tensor_names"
   input: "save/SaveV2/shape_and_slices"
+  input: "bn1/beta"
+  input: "bn1/gamma"
+  input: "bn1/moving_mean"
+  input: "bn1/moving_variance"
+  input: "bn2/beta"
+  input: "bn2/gamma"
+  input: "bn2/moving_mean"
+  input: "bn2/moving_variance"
   input: "conv1/kernel"
   input: "conv2/kernel"
   input: "dense1/bias"
@@ -11374,6 +15254,14 @@ node {
     key: "dtypes"
     value {
       list {
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
@@ -11498,7 +15386,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -11517,9 +15405,17 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 7
+            size: 15
           }
         }
+        string_val: "bn1/beta"
+        string_val: "bn1/gamma"
+        string_val: "bn1/moving_mean"
+        string_val: "bn1/moving_variance"
+        string_val: "bn2/beta"
+        string_val: "bn2/gamma"
+        string_val: "bn2/moving_mean"
+        string_val: "bn2/moving_variance"
         string_val: "conv1/kernel"
         string_val: "conv2/kernel"
         string_val: "dense1/bias"
@@ -11541,7 +15437,7 @@ node {
       list {
         shape {
           dim {
-            size: 7
+            size: 15
           }
         }
       }
@@ -11560,9 +15456,17 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 7
+            size: 15
           }
         }
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
         string_val: ""
         string_val: ""
         string_val: ""
@@ -11606,6 +15510,30 @@ node {
         shape {
           unknown_rank: true
         }
+        shape {
+          unknown_rank: true
+        }
+        shape {
+          unknown_rank: true
+        }
+        shape {
+          unknown_rank: true
+        }
+        shape {
+          unknown_rank: true
+        }
+        shape {
+          unknown_rank: true
+        }
+        shape {
+          unknown_rank: true
+        }
+        shape {
+          unknown_rank: true
+        }
+        shape {
+          unknown_rank: true
+        }
       }
     }
   }
@@ -11613,6 +15541,14 @@ node {
     key: "dtypes"
     value {
       list {
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
@@ -11627,8 +15563,360 @@ node {
 node {
   name: "save/Assign"
   op: "Assign"
-  input: "conv1/kernel"
+  input: "bn1/beta"
   input: "save/RestoreV2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_1"
+  op: "Assign"
+  input: "bn1/gamma"
+  input: "save/RestoreV2:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_2"
+  op: "Assign"
+  input: "bn1/moving_mean"
+  input: "save/RestoreV2:2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_3"
+  op: "Assign"
+  input: "bn1/moving_variance"
+  input: "save/RestoreV2:3"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn1/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 16
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_4"
+  op: "Assign"
+  input: "bn2/beta"
+  input: "save/RestoreV2:4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/beta"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_5"
+  op: "Assign"
+  input: "bn2/gamma"
+  input: "save/RestoreV2:5"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/gamma"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_6"
+  op: "Assign"
+  input: "bn2/moving_mean"
+  input: "save/RestoreV2:6"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_mean"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_7"
+  op: "Assign"
+  input: "bn2/moving_variance"
+  input: "save/RestoreV2:7"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@bn2/moving_variance"
+      }
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "save/Assign_8"
+  op: "Assign"
+  input: "conv1/kernel"
+  input: "save/RestoreV2:8"
   attr {
     key: "T"
     value {
@@ -11678,10 +15966,10 @@ node {
   }
 }
 node {
-  name: "save/Assign_1"
+  name: "save/Assign_9"
   op: "Assign"
   input: "conv2/kernel"
-  input: "save/RestoreV2:1"
+  input: "save/RestoreV2:9"
   attr {
     key: "T"
     value {
@@ -11731,10 +16019,10 @@ node {
   }
 }
 node {
-  name: "save/Assign_2"
+  name: "save/Assign_10"
   op: "Assign"
   input: "dense1/bias"
-  input: "save/RestoreV2:2"
+  input: "save/RestoreV2:10"
   attr {
     key: "T"
     value {
@@ -11775,10 +16063,10 @@ node {
   }
 }
 node {
-  name: "save/Assign_3"
+  name: "save/Assign_11"
   op: "Assign"
   input: "dense1/kernel"
-  input: "save/RestoreV2:3"
+  input: "save/RestoreV2:11"
   attr {
     key: "T"
     value {
@@ -11822,10 +16110,10 @@ node {
   }
 }
 node {
-  name: "save/Assign_4"
+  name: "save/Assign_12"
   op: "Assign"
   input: "dense2/bias"
-  input: "save/RestoreV2:4"
+  input: "save/RestoreV2:12"
   attr {
     key: "T"
     value {
@@ -11866,10 +16154,10 @@ node {
   }
 }
 node {
-  name: "save/Assign_5"
+  name: "save/Assign_13"
   op: "Assign"
   input: "dense2/kernel"
-  input: "save/RestoreV2:5"
+  input: "save/RestoreV2:13"
   attr {
     key: "T"
     value {
@@ -11913,10 +16201,10 @@ node {
   }
 }
 node {
-  name: "save/Assign_6"
+  name: "save/Assign_14"
   op: "Assign"
   input: "global_step"
-  input: "save/RestoreV2:6"
+  input: "save/RestoreV2:14"
   attr {
     key: "T"
     value {
@@ -11958,11 +16246,19 @@ node {
   op: "NoOp"
   input: "^save/Assign"
   input: "^save/Assign_1"
+  input: "^save/Assign_10"
+  input: "^save/Assign_11"
+  input: "^save/Assign_12"
+  input: "^save/Assign_13"
+  input: "^save/Assign_14"
   input: "^save/Assign_2"
   input: "^save/Assign_3"
   input: "^save/Assign_4"
   input: "^save/Assign_5"
   input: "^save/Assign_6"
+  input: "^save/Assign_7"
+  input: "^save/Assign_8"
+  input: "^save/Assign_9"
 }
 node {
   name: "save/restore_all"

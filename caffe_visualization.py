@@ -11,13 +11,22 @@ from PIL import Image
 from matplotlib import pyplot as plt
 from utils import vi_convs, vi_denses, vi_res10
 
+savedir = "./imgs/{}/caffe".format(NETNAME)
+if os.path.exists(savedir) and os.path.isdir(savedir):
+    shutil.rmtree(savedir)
+os.mkdir(savedir)
+
 weights_folder = "./tf_weights/{}/".format(NETNAME)
+with open(os.path.join("./selected_layers", NETNAME, "caffe_ops2show.txt"), "r") as f:
+    ops2show = f.read().splitlines()
+conv_ops = ops2show[:ops2show.index("---")]
+dense_ops = ops2show[ops2show.index("---")+1:]
 
 np_weights = {}
 layers = os.listdir(weights_folder)
 layers.sort()
 for l in layers:
-    l = l.replace(".npy", "")# for w in os.listdir(weights_folder) if "kernel" in w]
+    l = l.replace(".npy", "")
     if "kernel" in l:
     # Load kernels
         data = np.load(os.path.join(weights_folder, l+".npy"))
@@ -61,17 +70,10 @@ res = net.forward()["prob"]
 
 
 # Visualization of conv layers outputs
-#conv_ops = ["input", "bnorm0", "conv1", "bnorm1", "relu1", "pool1", "conv2", "bnorm2", "relu2", "pool2"]
-rootdir = "./imgs/{}/caffe".format(NETNAME)
-if os.path.exists(rootdir) and os.path.isdir(rootdir):
-    shutil.rmtree(rootdir)
-os.mkdir(rootdir)
 def resfun(op_name):
     return net.blobs[op_name].data[img_num]
-vi_convs(conv_ops, resfun, os.path.join(rootdir, "convs.png"), "Caffe")
-
+vi_convs(conv_ops, resfun, os.path.join(savedir, "convs.png"), "caffe convs outputs", "Caffe")
 # Visualization of fully connected layers
-vi_denses(denses_ops, resfun, os.path.join(rootdir, "denses.png"))
-
+vi_denses(dense_ops, resfun, os.path.join(savedir, "denses.png"), "caffe dense outputs")
 # Run caffe model on test images
-vi_res10(eval_data, res, num2lab, os.path.join(rootdir, "res10.png"))
+vi_res10(eval_data, res, num2lab, os.path.join(savedir, "res10.png"), "caffe test-10")
