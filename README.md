@@ -6,19 +6,18 @@ Train MNIST-classifier in Tensorflow and convert it to Caffe model.
 Run **train.py** - train tensorflow model. Get checkpoint in temp folder.
 
 ```
-Loss for final step: 0.028164389
-{'accuracy': 0.9684, 'loss': 0.095334284, 'global_step': 1000}
+test accuracy: 0.9828
 ```
 
 Graph structure of tensorflow model (tensorboard-visualization  from log folder)
 
-![](./imgs/graph-tf.png)
+![](./imgs/mnistcls/tb-loss.png)
 
 ## Check tf-model on test images
 
 Run **estimator_predict.py** - check tf-model on ten test images. This results will be compared with caffe predictions.
 
-![](imgs/mnist/res10-tf.png)
+![](imgs/mnistcls/tf/res10.png)
 
 ## Visualize layers outputs
 
@@ -116,9 +115,9 @@ bn2/FusedBatchNorm............: mean=0.06,   var=1.47
 relu2.........................: mean=0.46,   var=0.76
 ```
 
-![](imgs/mnist/convs-tf.png)
+![](imgs/mnistcls/tf/convs.png)
 
-![](imgs/mnist/denses-tf.png)
+![](imgs/mnistcls/tf/denses.png)
 
 4. Save weights and biases from tf-model to binary files. Weights has tensorflow format (width, height, channels, filters).
 
@@ -158,7 +157,11 @@ dense2/bias:0                                      -> dense02-bias              
 
 5. Build by hands caffe-model with equivalent structure. Model can be easily visualized by Netron program.
 
-![](./imgs/graph-caffe.png)
+![](./imgs/mnistcls/caffe-net.png)
+
+![](imgs/mnistcls/caffe/convs.png)
+
+![](imgs/mnistcls/caffe/denses.png)
 
 ```
 conv01
@@ -180,3 +183,5 @@ conv02........................: mean=0.06, var=0.65
 bn02..........................: mean=0.07, var=1.47
 relu02........................: mean=0.46, var=0.76
 ```
+
+![](imgs/mnistcls/caffe/res10.png)
