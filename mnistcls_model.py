@@ -13,20 +13,20 @@ last_conv_shape = [7, 7, 32]
 predict_op = "probs"
 data_folder = "mnist"
 
-def load_data(datasize=1000):
+
+def load_data(trainsize, validsize):
     # Load training and eval data
     ((train_data, train_labels),
      (eval_data, eval_labels)) = tf.keras.datasets.mnist.load_data()
 
-    if len(train_data.shape)==3:
-        train_data = np.expand_dims(train_data[:datasize], axis=-1)
-    train_labels = train_labels[:datasize].astype(np.int32)
+    train_data = np.expand_dims(train_data[:trainsize], axis=-1)
+    train_labels = train_labels[:trainsize].astype(np.int32)
 
-    if len(eval_data.shape) == 3:
-        eval_data = np.expand_dims(eval_data[:datasize], axis=-1)
-    eval_labels = eval_labels[:datasize].astype(np.int32)
+    eval_data = np.expand_dims(eval_data[:validsize], axis=-1)
+    eval_labels = eval_labels[:validsize].astype(np.int32)
 
     return train_data, train_labels, eval_data, eval_labels
+
 
 def inner_structure(input_layer, is_training):
     x = tf.add(input_layer, tf.constant(-128, tf.float32), name="input/Add")#tf.layers.batch_normalization(input_layer, training=is_training, name="bnorm0", epsilon=1e-5)
@@ -63,8 +63,7 @@ def inner_structure(input_layer, is_training):
     x = tf.layers.flatten(x)
     # Dense Layer 1
     x = tf.layers.dense(x, units=512, activation=tf.nn.relu, name="dense1")
-    #dropout = tf.layers.dropout(
-    #    inputs=dense, rate=0.4, training=mode == tf.estimator.ModeKeys.TRAIN)
+    x = tf.layers.dropout(x, rate=0.5, training=is_training)
     # Logits Layer
     logits = tf.layers.dense(x, units=10, name="dense2")
     return logits

@@ -1,4 +1,4 @@
-from pruning_test import sparse_np_variables
+from sparse_vars import sparse_np_variables
 from PIL import Image
 import numpy as np
 import tensorflow as tf

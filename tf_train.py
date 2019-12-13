@@ -1,14 +1,14 @@
 from mnistcls_model import *
 
-train_data, train_labels, eval_data, eval_labels = load_data(10000)
+train_data, train_labels, eval_data, eval_labels = load_data(20000, 5000)
 
-logdir = "./tmp/{}".format(NETNAME)
+logdir = "./tmp/{}_".format(NETNAME)
 if os.path.exists(logdir) and os.path.isdir(logdir):
     shutil.rmtree(logdir)
 os.mkdir(logdir)
 
 # Create the Estimator
-mnist_classifier = tf.estimator.Estimator(
+classifier = tf.estimator.Estimator(
     model_fn=cnn_model_fn, model_dir=logdir)
 
 # Set up logging for predictions
@@ -21,11 +21,11 @@ logging_hook = tf.train.LoggingTensorHook(
 train_input_fn = tf.estimator.inputs.numpy_input_fn(
     x={"input": train_data.astype(np.float32)},
     y=train_labels,
-    batch_size=100,
-    num_epochs=50,
+    batch_size=32,
+    num_epochs=40,
     shuffle=True)
 
-mnist_classifier.train(input_fn=train_input_fn)
+classifier.train(input_fn=train_input_fn)
 
 eval_input_fn = tf.estimator.inputs.numpy_input_fn(
     x={"input": eval_data.astype(np.float32)},
@@ -33,5 +33,5 @@ eval_input_fn = tf.estimator.inputs.numpy_input_fn(
     num_epochs=1,
     shuffle=False)
 
-eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
+eval_results = classifier.evaluate(input_fn=eval_input_fn)
 print(eval_results)
